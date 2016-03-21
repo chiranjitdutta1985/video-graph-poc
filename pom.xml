@@ -15,13 +15,7 @@
 	</properties>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-lambda-java-core</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-
+	
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -114,19 +108,15 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.3</version>
+				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<createDependencyReducedPom>false</createDependencyReducedPom>
+				  <archive>
+					<manifest>
+						<!-- Jar file entry point -->
+						<mainClass>com.timeinc.assetmgr.video.VideoMetaDataProvider</mainClass>
+					</manifest>
+				  </archive>
 				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
