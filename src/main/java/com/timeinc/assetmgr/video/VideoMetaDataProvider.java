@@ -544,7 +544,7 @@ public class VideoMetaDataProvider {
 
 	private void loadAndProcessTranscripts(Map<String, JsonNode> brightCoveResponse, Set<String> indexIds) throws Throwable{// Load it back to retrieve tag details.
 		VideoMetaDataProvider object = new VideoMetaDataProvider();
-		PrintWriter out = new PrintWriter(new FileWriter("/Users/bhandarr/Documents/video_logs/log.json"));
+		PrintWriter out = new PrintWriter(new FileWriter("logs/video_logs/log.json"));
 		int count = 0;
 		int i = 1;
 		try{
@@ -694,26 +694,26 @@ public class VideoMetaDataProvider {
 
 	}
 
-	private void dummy() throws IOException{
-		int count = 0;
-		PrintWriter out = new PrintWriter(new FileWriter("/Users/bhandarr/Documents/video_logs/app.txt"));
-		try{
-			for(int i=0 ; i<45; i++){
-				count++;
-				out.append("hi"+i);
-				out.append("\n");
-				if(count>=40){
-					count = 0;
-					out.close();
-					out = new PrintWriter(new FileWriter("/Users/bhandarr/Documents/video_logs/app"+i+".txt"));
-				}
-			}
-		}catch(Exception e){
-			System.out.println(e);
-		}finally{
-			out.close();
-		}
-	}
+	//	private void dummy() throws IOException{
+	//		int count = 0;
+	//		PrintWriter out = new PrintWriter(new FileWriter("/Users/bhandarr/Documents/video_logs/app.txt"));
+	//		try{
+	//			for(int i=0 ; i<45; i++){
+	//				count++;
+	//				out.append("hi"+i);
+	//				out.append("\n");
+	//				if(count>=40){
+	//					count = 0;
+	//					out.close();
+	//					out = new PrintWriter(new FileWriter("/Users/bhandarr/Documents/video_logs/app"+i+".txt"));
+	//				}
+	//			}
+	//		}catch(Exception e){
+	//			System.out.println(e);
+	//		}finally{
+	//			out.close();
+	//		}
+	//	}
 
 }
 
