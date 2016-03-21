@@ -615,7 +615,7 @@ public class VideoMetaDataProvider {
 				//				finalResult = nodeResult.get("account_id");
 				//				finalResult = nodeResult.get("tags");
 
-				out.append(nodeResult.toString());
+				out.append(response.toString());
 				out.append("\n");
 				//			logger.info(nodeResult.toString());
 				//			logger.info("\n");
