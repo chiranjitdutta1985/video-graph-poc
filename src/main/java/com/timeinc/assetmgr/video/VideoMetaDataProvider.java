@@ -638,10 +638,7 @@ public class VideoMetaDataProvider {
 
 				//			logger.info(nodeResult.toString());
 				//			logger.info("\n");
-				if(count == 5){
-					break;
-				}
-
+				
 				if(count>=i*100){
 					count = 0;
 					out.append("]");
