@@ -398,7 +398,7 @@ public class VideoMetaDataProvider {
 	private void putTagsInMap(Map<String, Double> tagsWithRelevenace, JsonNode infoNode) {
 
 		String text = null;
-		Double relevance = null;
+		Double relevance = 0.60;
 		String type = "";
 
 		if (null != infoNode.get("text") && null != infoNode.get("relevance")) {
@@ -547,8 +547,10 @@ public class VideoMetaDataProvider {
 		PrintWriter out = new PrintWriter(new FileWriter("logs/video_logs/log.json"));
 		int count = 0;
 		int i = 1;
-		try{
-			for (String id : indexIds) {
+		out.append("[");
+
+		for (String id : indexIds) {
+			try{
 				logger.info("###############STARTING FOR ID : "+id);
 				count ++;
 				JsonNode nodeResult = (JsonNode) brightCoveResponse.get(id);
@@ -616,25 +618,35 @@ public class VideoMetaDataProvider {
 				//				finalResult = nodeResult.get("tags");
 
 				out.append(response.toString());
-				out.append("\n");
+
 				//			logger.info(nodeResult.toString());
 				//			logger.info("\n");
+				if(count == 5){
+					break;
+				}
+
 				if(count>=i*100){
 					count = 0;
+					out.append("]");
 					out.close();
+					out = null ;
 					out = new PrintWriter(new FileWriter("logs/video_logs/log"+i+".json"));
+					out.append("[");
 					i++;
+				}else{
+					out.append(",");
 				}
+
 				logger.info("###############SUCCESS FOR ID : "+id);
 				//				break;
+			}catch(Exception e){
+				logger.info("###############EXCEPTION FOR ID : "+id);
+				continue;
 			}
-		}catch(Exception e){
-			logger.info("###############EXCEPTION");
-			throw e;
 		}
-		finally{
-			out.close();
-		}
+		out.append("]");
+		out.close();
+		out = null ;
 	}
 
 	//	public StringBuilder getTranscript(String id)
