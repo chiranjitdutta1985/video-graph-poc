@@ -46,7 +46,7 @@ public class VideoMetaDataProvider {
 	//	private String brandName="fortune";
 	//	private String rampAPIUser="ashis.roy@timeinc.com";
 	//	private String rampAPIPassword="Time2016!";
-	private String assetTaggingApiEndPoint="https://apeassetmgrtest2-env.us-west-2.elasticbeanstalk.com/v1/asset-info";
+	private String assetTaggingApiEndPoint="http://videosuggestdevenv-env.us-west-2.elasticbeanstalk.com/v1/asset-info";
 	private String authorizationKey="FE66489F304DC75B8D6E8200DFF8A456E8DAEACEC428B427E9518741C92C6660";
 	private String transcriptUrl = "https://cms.api.brightcove.com/v1/accounts/2111767321001/videos/";
 
@@ -165,14 +165,26 @@ public class VideoMetaDataProvider {
 
 		String json = resultFromProvider.substring(resultFromProvider.indexOf("(") + 1, resultFromProvider.lastIndexOf(")"));
 
+		String captionAndDescription = String.format("%s. %s", jsonNode.path("name").asText(),
+				jsonNode.path("description").asText());
+
 		JsonNode result = mapper.readTree(json);
 
 		Preconditions.checkArgument(null != result && null != result.get("data"));
 
 		JsonNode dataNode = result.path("data");
 
-		logger.info("data :" + dataNode);
+		String resultFromProvider2 = getTagsFromProviders(captionAndDescription);
 
+		String json2 = resultFromProvider.substring(resultFromProvider2.indexOf("(") + 1, resultFromProvider2.lastIndexOf(")"));
+
+		JsonNode result2 = mapper.readTree(json2);
+
+		Preconditions.checkArgument(null != result2 && null != result2.get("data"));
+
+		JsonNode dataNode2 = result2.path("data");
+
+		logger.info("data :" + dataNode + "data 2 :"+dataNode2);
 		System.out.println("data :" + dataNode);
 
 		Map<String, Double> keywordsWithRelevenace = new HashMap<String, Double>();
@@ -186,6 +198,11 @@ public class VideoMetaDataProvider {
 		entitiesWithRelevenace = formatEntities(entitiesWithRelevenace, dataNode);
 		taxonomyWithRelevenace = formatTaxonomy(taxonomyWithRelevenace, dataNode);
 		sentimentsWithRelevenace = formatSentiments(sentimentsWithRelevenace, dataNode);
+
+		keywordsWithRelevenace = formatKeywords(keywordsWithRelevenace, dataNode2);
+		entitiesWithRelevenace = formatEntities(entitiesWithRelevenace, dataNode2);
+		taxonomyWithRelevenace = formatTaxonomy(taxonomyWithRelevenace, dataNode2);
+		sentimentsWithRelevenace = formatSentiments(sentimentsWithRelevenace, dataNode2);
 
 		Preconditions.checkArgument(null != jsonNode.get("tags"));
 
